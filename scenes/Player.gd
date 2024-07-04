@@ -3,13 +3,13 @@ extends CharacterBody2D
 @onready var sprite = $AnimatedSprite2D
 @onready var camera = $Camera2D
 
-@export
-var zoom_speed = 1.4
-@export
-var max_zoom = 5
-
-
+const zoom_speed = 1.4
+const max_zoom = 5
 const SPEED = 300.0
+
+func _ready():
+	position.x = 2000
+	position.y = -500
 
 func _physics_process(_delta):
 	move(_delta)
