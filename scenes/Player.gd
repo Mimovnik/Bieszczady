@@ -1,10 +1,29 @@
 extends CharacterBody2D
 
 @onready var sprite = $AnimatedSprite2D
+@onready var camera = $Camera2D
+
+@export
+var zoom_speed = 1.4
+@export
+var max_zoom = 5
+
 
 const SPEED = 300.0
 
 func _physics_process(_delta):
+	move(_delta)
+	zoom()
+	
+func zoom():
+	if Input.is_action_just_released("zoom-out"):
+		$Camera2D.zoom /= zoom_speed
+	if Input.is_action_just_released("zoom-in"):
+		$Camera2D.zoom *= zoom_speed
+		$Camera2D.zoom.x = min($Camera2D.zoom.x, max_zoom)
+		$Camera2D.zoom.y = min($Camera2D.zoom.y, max_zoom)
+
+func move(_delta):
 	var horizontal = Input.get_axis("left", "right")
 	if horizontal:
 		velocity.x = horizontal * SPEED
