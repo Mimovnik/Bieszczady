@@ -18,6 +18,10 @@ height_freq = 0.03
 minimum_height = 150.0
 
 [node name="Player" parent="." instance=ExtResource("3_y377t")]
+scale = Vector2(2, 2)
+speed = 200.0
+jump_velocity = -500.0
+step_help_frames = 4
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position_smoothing_enabled = true
