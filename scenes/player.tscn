@@ -54,6 +54,3 @@ texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_xwjm2")
 animation = &"idle"
 autoplay = "idle"
-
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(0.2, 0.2)

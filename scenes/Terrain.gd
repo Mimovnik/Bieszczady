@@ -2,8 +2,10 @@ extends Node2D
 
 @onready var tile_map = $TileMap
 
+@onready var tile_size = $TileMap.tile_set.tile_size
+
 var background = 0
-var foreground = 1
+var midground = 1
 
 const no_tile = Vector2i(-1, -1)
 var grass_dirt = Vector2i(0, 0)
@@ -16,8 +18,8 @@ var height_noise: FastNoiseLite = null
 
 @export var world_seed: int
 
-@export var max_width: int = 100
-@export var max_height: int = 100
+@export var world_width: int = 100
+@export var world_height: int = 100
 
 @export var cheese_cave_freq: float
 @export var cheese_cave_threshold: float
@@ -34,12 +36,19 @@ var height_noise: FastNoiseLite = null
 
 func _ready():
 	generate_terrain()
+	
+func get_height(x: int):
+	var height_at_x: int = 0
+	for y in range(0, -world_height, -1):
+		if tile_map.get_cell_source_id(midground, Vector2i(x, y)) != -1:
+			height_at_x = y
+	return height_at_x
 
 func generate_terrain():
 	generate_noise()
 
-	for y in range(max_height):
-		for x in range(max_width):
+	for y in range(world_height):
+		for x in range(world_width):
 			var tile = choose_tile(x, y)
 			if tile == no_tile:
 				continue
@@ -74,7 +83,7 @@ func choose_tile(x: int, y: int) -> Vector2i:
 
 func create_tile(coords: Vector2i, atlas_coords: Vector2i):
 	var y_inverted_coords = Vector2i(coords.x, -coords.y)
-	tile_map.set_cell(foreground, y_inverted_coords, 0, atlas_coords)
+	tile_map.set_cell(midground, y_inverted_coords, 0, atlas_coords)
 
 func generate_noise():
 	cheese_cave_noise = FastNoiseLite.new()

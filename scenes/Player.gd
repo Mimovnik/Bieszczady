@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+@onready var terrain = %Terrain
+
 @onready var sprite = $AnimatedSprite2D
 @onready var camera = $Camera2D
 
@@ -8,8 +10,8 @@ const max_zoom = 5
 const SPEED = 300.0
 
 func _ready():
-	position.x = 2000
-	position.y = -500
+	position.x = (terrain.world_width / 2 + 0.5) * terrain.tile_size.x 
+	position.y = (terrain.get_height(terrain.world_width / 2) - 1) * terrain.tile_size.y
 
 func _physics_process(_delta):
 	move(_delta)

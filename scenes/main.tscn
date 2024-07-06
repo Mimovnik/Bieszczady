@@ -6,9 +6,10 @@
 [node name="Main" type="Node2D"]
 
 [node name="Terrain" parent="." instance=ExtResource("1_rhgbe")]
+unique_name_in_owner = true
 world_seed = 2
-max_width = 500
-max_height = 200
+world_width = 500
+world_height = 200
 cheese_cave_freq = 0.03
 cheese_cave_threshold = -0.1
 noodle_cave_freq = 0.01
@@ -17,3 +18,6 @@ height_freq = 0.03
 minimum_height = 150.0
 
 [node name="Player" parent="." instance=ExtResource("3_y377t")]
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position_smoothing_enabled = true
