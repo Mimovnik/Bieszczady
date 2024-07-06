@@ -44,6 +44,21 @@ func zoom():
 		$Camera2D.zoom.y = min($Camera2D.zoom.y, max_zoom)
 
 func move(_delta):
+	count_special_frames()
+	
+	add_gravity(_delta)
+
+	var horizontal = Input.get_axis("left", "right")
+	
+	horizontal_move(horizontal)
+	
+	step_help(horizontal)
+	
+	handle_jump()
+	
+	move_and_slide()
+
+func count_special_frames():
 	if is_on_wall():
 		touch_wall_frames += 1
 	else:
@@ -56,24 +71,21 @@ func move(_delta):
 	
 	after_jump_frames += 1
 	
-	# Add the gravity.
+func add_gravity(_delta):
 	if not is_on_floor():
 		velocity.y += gravity * _delta
 
-	# Handle horizontal movement
-	var horizontal = Input.get_axis("left", "right")
+func horizontal_move(horizontal):
 	if horizontal:
 		velocity.x = horizontal * speed
 	else:
 		velocity.x = move_toward(velocity.x, 0, speed)
 	
-	# Help moving up a step
+func step_help(horizontal):
 	if is_on_wall() and horizontal and touch_wall_frames < step_help_frames and after_jump_frames > jump_help_free_frames:
 		velocity.y = -speed
-	
-	# Handle jump.
+		
+func handle_jump():
 	if Input.is_action_just_pressed("jump") and (last_floor_frames < jump_coyote_frames or is_on_wall()):
 		velocity.y = jump_velocity
 		after_jump_frames = 0
-	
-	move_and_slide()
