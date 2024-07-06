@@ -1,25 +1,25 @@
 [gd_scene load_steps=9 format=3 uid="uid://cf11cheucocqv"]
 
-[ext_resource type="Script" path="res://scenes/Player.gd" id="1_xpmh4"]
-[ext_resource type="Texture2D" uid="uid://b681a3e3us3wp" path="res://brackeys_platformer_assets/sprites/knight.png" id="2_4qn8l"]
+[ext_resource type="Script" path="res://scripts/Player.gd" id="1_xpmh4"]
+[ext_resource type="Texture2D" uid="uid://b681a3e3us3wp" path="res://assets/brackeys_platformer_assets/sprites/knight.png" id="2_jap7n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gqnp7"]
 size = Vector2(16, 20)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3lob0"]
-atlas = ExtResource("2_4qn8l")
+atlas = ExtResource("2_jap7n")
 region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5iqkw"]
-atlas = ExtResource("2_4qn8l")
+atlas = ExtResource("2_jap7n")
 region = Rect2(32, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f61mj"]
-atlas = ExtResource("2_4qn8l")
+atlas = ExtResource("2_jap7n")
 region = Rect2(64, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_63epj"]
-atlas = ExtResource("2_4qn8l")
+atlas = ExtResource("2_jap7n")
 region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xwjm2"]

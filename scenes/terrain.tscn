@@ -1,10 +1,10 @@
 [gd_scene load_steps=5 format=3 uid="uid://itvhxdurebqp"]
 
-[ext_resource type="Script" path="res://scenes/Terrain.gd" id="1_0lipy"]
-[ext_resource type="Texture2D" uid="uid://b14dpguifv0db" path="res://brackeys_platformer_assets/sprites/world_tileset.png" id="2_r8mht"]
+[ext_resource type="Script" path="res://scripts/Terrain.gd" id="1_0lipy"]
+[ext_resource type="Texture2D" uid="uid://b14dpguifv0db" path="res://assets/brackeys_platformer_assets/sprites/world_tileset.png" id="2_1m4de"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nmaui"]
-texture = ExtResource("2_r8mht")
+texture = ExtResource("2_1m4de")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
