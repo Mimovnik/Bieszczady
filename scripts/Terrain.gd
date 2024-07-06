@@ -7,11 +7,6 @@ extends Node2D
 var background = 0
 var midground = 1
 
-const no_tile = Vector2i(-1, -1)
-var grass_dirt = Vector2i(0, 0)
-var dirt = Vector2i(0, 1)
-var stone = Vector2i(6, 1)
-
 var cheese_cave_noise: FastNoiseLite = null
 var noodle_cave_noise: FastNoiseLite = null
 var height_noise: FastNoiseLite = null
@@ -34,12 +29,33 @@ var height_noise: FastNoiseLite = null
 
 @export var top_layer: float
 
+const no_tile = Vector2i(-1, -1)
+var name_to_coords = {}
+
 func _ready():
+	map_block_names_to_coords()
 	generate_terrain()
+	
+func map_block_names_to_coords():
+	var atlas =  $TileMap.tile_set.get_source(0)
+	var size = atlas.get_atlas_grid_size()
+	for x in size.x:
+		for y in size.y:
+			var coords = atlas.get_tile_at_coords(Vector2i(x, y))
+			if coords == no_tile:
+				continue
+			var tile_data = atlas.get_tile_data(coords, 0)
+			if tile_data == null:
+				continue
+			var block_name: String = tile_data.get_custom_data("name")
+			if block_name == null or block_name.is_empty():
+				continue
+			name_to_coords[block_name] = Vector2i(x, y)
 	
 func get_height(x: int):
 	var height_at_x: int = 0
-	for y in range(0, -world_height, -1):
+	for y in range(0, -world_height, -1): # in godot y decreases upwards
+		# if tile exists
 		if tile_map.get_cell_source_id(midground, Vector2i(x, y)) != -1:
 			height_at_x = y
 	return height_at_x
@@ -74,15 +90,15 @@ func choose_tile(x: int, y: int) -> Vector2i:
 	
 	# ---Decorations---
 	if y == height:
-		return grass_dirt
+		return name_to_coords["grass_dirt"]
 		
 	if y > height - top_layer:
-		return dirt
+		return name_to_coords["dirt"]
 		
-	return stone
-
+	return name_to_coords["stone"]
+	
 func create_tile(coords: Vector2i, atlas_coords: Vector2i):
-	var y_inverted_coords = Vector2i(coords.x, -coords.y)
+	var y_inverted_coords = Vector2i(coords.x, -coords.y) # in godot y decreases upwards
 	tile_map.set_cell(midground, y_inverted_coords, 0, atlas_coords)
 
 func generate_noise():
