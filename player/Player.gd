@@ -4,6 +4,7 @@ extends CharacterBody2D
 
 @onready var sprite = $AnimatedSprite2D
 @onready var camera = $Camera2D
+@onready var gather_cooldown: Timer = $GatherCooldown
 
 @export var speed = 100.0
 @export var jump_velocity = -400.0
@@ -21,9 +22,13 @@ var last_floor_frames: int = 0
 var touch_wall_frames: int = 0
 var after_jump_frames: int = 0
 
+var gather_on_cooldown: bool = false
+
 func _ready():
 	position.x = (terrain.world_width / 2 + 0.5) * terrain.tile_size.x 
 	position.y = (terrain.get_height(terrain.world_width / 2) - 1) * terrain.tile_size.y
+	gather_cooldown.timeout.connect(func():
+			gather_on_cooldown = false; gather_cooldown.stop())
 
 func _physics_process(_delta):
 	move(_delta)
@@ -60,10 +65,14 @@ func move(_delta):
 	move_and_slide()
 	
 func gather():
+	if gather_on_cooldown:
+		return
 	if Input.is_action_pressed("left_click"):
-		var amount = 1
+		gather_cooldown.start()
+		gather_on_cooldown = true
+		var damage = 1
 		var mouse_pos: Vector2 = get_global_mouse_position()
-		terrain.dig_block_at(mouse_pos, amount)
+		terrain.dig_block_at(mouse_pos, damage)
 
 func count_special_frames():
 	if is_on_wall():

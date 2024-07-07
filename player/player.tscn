@@ -56,3 +56,6 @@ texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_xwjm2")
 animation = &"idle"
 autoplay = "idle"
+
+[node name="GatherCooldown" type="Timer" parent="."]
+wait_time = 0.1
