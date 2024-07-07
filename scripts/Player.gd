@@ -27,6 +27,7 @@ func _ready():
 
 func _physics_process(_delta):
 	move(_delta)
+	gather()
 	zoom()
 	
 	# Flip sprite
@@ -57,6 +58,12 @@ func move(_delta):
 	handle_jump()
 	
 	move_and_slide()
+	
+func gather():
+	if Input.is_action_pressed("left_click"):
+		var amount = 1
+		var mouse_pos: Vector2 = get_global_mouse_position()
+		terrain.dig_block_at(mouse_pos, amount)
 
 func count_special_frames():
 	if is_on_wall():
