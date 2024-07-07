@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://itvhxdurebqp"]
 
-[ext_resource type="Script" path="res://scripts/Terrain.gd" id="1_okt7v"]
+[ext_resource type="Script" path="res://terrain/Terrain.gd" id="1_yx6ne"]
 [ext_resource type="Texture2D" uid="uid://b14dpguifv0db" path="res://assets/brackeys_platformer_assets/sprites/world_tileset.png" id="2_1m4de"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nmaui"]
@@ -472,7 +472,7 @@ custom_data_layer_1/type = 2
 sources/0 = SubResource("TileSetAtlasSource_nmaui")
 
 [node name="Terrain" type="Node2D"]
-script = ExtResource("1_okt7v")
+script = ExtResource("1_yx6ne")
 steepness = 20.0
 minimum_height = 50.0
 top_layer = 8.0

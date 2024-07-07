@@ -1,7 +1,7 @@
 extends Node2D
 
-const FloatingText = preload("res://scenes/floating_text.tscn")
-const Block = preload("res://scripts/Block.gd")
+const FloatingText = preload("res://ui/floating_text.tscn")
+const Block = preload("res://terrain/Block.gd")
 
 @onready var tile_map = $TileMap
 

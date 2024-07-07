@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://cf11cheucocqv"]
 
-[ext_resource type="Script" path="res://scripts/Player.gd" id="1_owp06"]
+[ext_resource type="Script" path="res://player/Player.gd" id="1_olrau"]
 [ext_resource type="Texture2D" uid="uid://b681a3e3us3wp" path="res://assets/brackeys_platformer_assets/sprites/knight.png" id="2_jap7n"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xrogy"]
@@ -44,7 +44,7 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D"]
-script = ExtResource("1_owp06")
+script = ExtResource("1_olrau")
 step_help_frames = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
