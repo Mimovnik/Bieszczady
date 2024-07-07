@@ -5,7 +5,7 @@ extends Node2D
 
 var text: String
 
-const SPEED: float = 10.0
+const SPEED: float = 50.0
 
 func _ready():
 	label.text = text
