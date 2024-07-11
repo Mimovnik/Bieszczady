@@ -1,21 +1,17 @@
 class_name Block extends Node
 
-var display_name: String
+@export var display_name: String
 
-var durability: int
-
-var layer: int
+@export var durability: int
 
 var coords: Vector2i
 
+var layer: int
+
+var prefab: PackedScene
+
 signal durability_depleted(block: Block)
 
-func _init(display_name: String, durability: int, layer: int, coords: Vector2i):
-	self.display_name = display_name
-	self.durability = durability
-	self.layer = layer
-	self.coords = coords
-	
 func hit(damage: int):
 	durability -= damage
 	if durability <= 0:

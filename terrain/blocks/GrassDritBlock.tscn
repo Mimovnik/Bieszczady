@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://wib3at0d7b3p"]
+
+[ext_resource type="Script" path="res://terrain/Block.gd" id="1_7caed"]
+
+[node name="Block" type="Node"]
+script = ExtResource("1_7caed")
+display_name = "grass_dirt"
+durability = 10

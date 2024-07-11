@@ -25,8 +25,8 @@ var after_jump_frames: int = 0
 var gather_on_cooldown: bool = false
 
 func _ready():
-	position.x = (terrain.world_width / 2 + 0.5) * terrain.tile_size.x 
-	position.y = (terrain.get_height(terrain.world_width / 2) - 1) * terrain.tile_size.y
+	position.x = (terrain.world_width / 2 + 0.5) * terrain.block_map.tile_set.tile_size.x 
+	position.y = (terrain.get_height(terrain.world_width / 2) - 1) * terrain.block_map.tile_set.tile_size.y
 	gather_cooldown.timeout.connect(func():
 			gather_on_cooldown = false; gather_cooldown.stop())
 

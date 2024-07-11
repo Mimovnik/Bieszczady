@@ -1,11 +1,8 @@
 extends Node2D
 
 const FloatingText = preload("res://ui/floating_text.tscn")
-const Block = preload("res://terrain/Block.gd")
 
-@onready var tile_map = $TileMap
-
-@onready var tile_size = $TileMap.tile_set.tile_size
+@onready var block_map: BlockMap = $BlockMap
 
 var background = 0
 var midground = 1
@@ -32,27 +29,9 @@ var height_noise: FastNoiseLite = null
 
 @export var top_layer: float
 
-const no_tile = Vector2i(-1, -1)
-class BlockData:
-	var display_name: String
-	var durability: int
-	var atlas_coords: Vector2i
-	
-	func _init(display_name: String, durability: int, atlas_coords: Vector2i):
-		self.display_name = display_name
-		self.durability = durability
-		self.atlas_coords = atlas_coords
-
-var name_to_block_data = {}
-
-var blocks = {}
-
-func _ready():
-	generate_terrain()
-
 func dig_block_at(position: Vector2, damage: int):
-	var coords: Vector2i = tile_map.local_to_map(position)
-	var block: Block = get_block_at(coords)
+	var coords: Vector2i = block_map.local_to_map(position)
+	var block: Block = block_map.get_block(coords)
 	if block == null:
 		return
 	block.hit(damage)
@@ -64,52 +43,29 @@ func spawn_text(text: String, position: Vector2):
 	instance.position = position
 	instance.text = text
 	add_child(instance)
-
-func get_block_at(coords: Vector2i) -> Block:
-	if !blocks.has(coords):
-		return null
-	return blocks[coords]
-	
-func map_names_to_block_data():
-	var atlas =  $TileMap.tile_set.get_source(0)
-	var size = atlas.get_atlas_grid_size()
-	for x in size.x:
-		for y in size.y:
-			var coords = atlas.get_tile_at_coords(Vector2i(x, y))
-			if coords == no_tile:
-				continue
-				
-			var tile_data = atlas.get_tile_data(coords, 0)
-			if tile_data == null:
-				continue
-				
-			var display_name: String = tile_data.get_custom_data("name")
-			if display_name == null or display_name.is_empty():
-				continue
-		
-			var durability: int = tile_data.get_custom_data("durability")
-			name_to_block_data[display_name] = BlockData.new(display_name, durability, coords)
 	
 func get_height(x: int):
 	var height_at_x: int = 0
 	for y in range(0, -world_height, -1): # in godot y decreases upwards
-		# if tile exists
-		if tile_map.get_cell_source_id(midground, Vector2i(x, y)) != -1:
+		if block_map.get_block(Vector2i(x, y)) != null:
 			height_at_x = y
 	return height_at_x
 
-func generate_terrain():
-	generate_noise()
+func _ready():
+	_generate_terrain()
 
-	map_names_to_block_data()
+func _generate_terrain():
+	_generate_noise()
+
 	for y in range(world_height):
 		for x in range(world_width):
-			var block = choose_block(x, y)
-			if block == null:
+			var block_prefab = _choose_block(x, y)
+			if block_prefab == null:
 				continue
-			create_tile(Vector2i(x, y), block)
+			var coords = Vector2i(x, -y) # -y -> in godot y decreases upwards
+			block_map.create_block(coords, block_prefab, midground)
 
-func choose_block(x: int, y: int) -> BlockData:
+func _choose_block(x: int, y: int) -> BlockPrefab:
 	# ---Terrain shaping---
 	var height: int = height_noise.get_noise_1d(x) * steepness + minimum_height
 	
@@ -125,30 +81,16 @@ func choose_block(x: int, y: int) -> BlockData:
 	if abs(noodle_cave_noise.get_noise_2d(x,y)) < noodle_cave_threshold:
 		return null
 	
-	
 	# ---Decorations---
 	if y == height:
-		return name_to_block_data["grass_dirt"]
+		return block_map.get_block_prefab("grass_dirt")
 		
 	if y > height - top_layer:
-		return name_to_block_data["dirt"]
+		return block_map.get_block_prefab("dirt")
 		
-	return name_to_block_data["stone"]
-	
-func create_tile(coords: Vector2i, block_data: BlockData):
-	var y_inverted_coords = Vector2i(coords.x, -coords.y) # in godot y decreases upwards
-	tile_map.set_cell(midground, y_inverted_coords, 0, block_data.atlas_coords)
-	var block = Block.new(block_data.display_name, block_data.durability, midground, y_inverted_coords)
-	blocks[y_inverted_coords] = block
-	block.durability_depleted.connect(_on_block_durability_depleted)
-	
-func _on_block_durability_depleted(block: Block):
-	tile_map.erase_cell(block.layer, block.coords)
-	var was_there = blocks.erase(block.coords)
-	assert(was_there, "Erasing block that wasn't in 'terrain.blocks'")
-	block.queue_free()
+	return block_map.get_block_prefab("stone")
 
-func generate_noise():
+func _generate_noise():
 	cheese_cave_noise = FastNoiseLite.new()
 	cheese_cave_noise.noise_type = FastNoiseLite.TYPE_PERLIN
 	cheese_cave_noise.frequency = cheese_cave_freq
