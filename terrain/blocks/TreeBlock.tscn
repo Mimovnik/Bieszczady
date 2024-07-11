@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://dhpe8tb0gfs8y"]
+[gd_scene load_steps=3 format=3 uid="uid://dhpe8tb0gfs8y"]
 
 [ext_resource type="Script" path="res://terrain/Block.gd" id="1_3bx2w"]
+[ext_resource type="PackedScene" uid="uid://bxie5pvvkoira" path="res://items/drops/WoodDrop.tscn" id="2_1l4xx"]
 
 [node name="Block" type="Node"]
 script = ExtResource("1_3bx2w")
 display_name = "tree"
 durability = 20
+drop_scene = ExtResource("2_1l4xx")

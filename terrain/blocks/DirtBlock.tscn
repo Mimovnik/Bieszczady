@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://dl81l1pbov4wc"]
+[gd_scene load_steps=3 format=3 uid="uid://dl81l1pbov4wc"]
 
 [ext_resource type="Script" path="res://terrain/Block.gd" id="1_kyhuu"]
+[ext_resource type="PackedScene" uid="uid://balidnp3ny7bh" path="res://items/drops/DirtDrop.tscn" id="2_77t68"]
 
 [node name="Block" type="Node"]
 script = ExtResource("1_kyhuu")
 display_name = "dirt"
 durability = 10
+drop_scene = ExtResource("2_77t68")
