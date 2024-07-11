@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://terrain/Terrain.gd" id="1_yx6ne"]
 [ext_resource type="Texture2D" uid="uid://b14dpguifv0db" path="res://assets/brackeys_platformer_assets/sprites/world_tileset.png" id="2_1m4de"]
-[ext_resource type="PackedScene" uid="uid://wib3at0d7b3p" path="res://terrain/blocks/GrassDritBlock.tscn" id="2_dq2nf"]
+[ext_resource type="PackedScene" uid="uid://dhpe8tb0gfs8y" path="res://terrain/blocks/TreeBlock.tscn" id="3_0u1nm"]
 [ext_resource type="PackedScene" uid="uid://dl81l1pbov4wc" path="res://terrain/blocks/DirtBlock.tscn" id="3_ee32l"]
 [ext_resource type="Script" path="res://terrain/BlockMap.gd" id="3_tdrp7"]
 [ext_resource type="PackedScene" uid="uid://dytc6t7nxngub" path="res://terrain/blocks/StoneBlock.tscn" id="4_vwmhd"]
@@ -14,7 +14,7 @@ texture = ExtResource("2_1m4de")
 0:0/0/physics_layer_0/angular_velocity = 0.0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 0:0/0/custom_data_0 = "grass_dirt"
-0:0/0/custom_data_1 = ExtResource("2_dq2nf")
+0:0/0/custom_data_1 = ExtResource("3_ee32l")
 1:0/0 = 0
 1:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:0/0/physics_layer_0/angular_velocity = 0.0
@@ -190,15 +190,6 @@ texture = ExtResource("2_1m4de")
 1:4/0 = 0
 1:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:4/0/physics_layer_0/angular_velocity = 0.0
-2:4/0 = 0
-2:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
-2:4/0/physics_layer_0/angular_velocity = 0.0
-3:4/0 = 0
-3:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
-3:4/0/physics_layer_0/angular_velocity = 0.0
-4:4/0 = 0
-4:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
-4:4/0/physics_layer_0/angular_velocity = 0.0
 5:4/0 = 0
 5:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 5:4/0/physics_layer_0/angular_velocity = 0.0
@@ -220,15 +211,6 @@ texture = ExtResource("2_1m4de")
 1:5/0 = 0
 1:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:5/0/physics_layer_0/angular_velocity = 0.0
-2:5/0 = 0
-2:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
-2:5/0/physics_layer_0/angular_velocity = 0.0
-3:5/0 = 0
-3:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
-3:5/0/physics_layer_0/angular_velocity = 0.0
-4:5/0 = 0
-4:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
-4:5/0/physics_layer_0/angular_velocity = 0.0
 5:5/0 = 0
 5:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 5:5/0/physics_layer_0/angular_velocity = 0.0
@@ -244,15 +226,6 @@ texture = ExtResource("2_1m4de")
 1:6/0 = 0
 1:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:6/0/physics_layer_0/angular_velocity = 0.0
-2:6/0 = 0
-2:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
-2:6/0/physics_layer_0/angular_velocity = 0.0
-3:6/0 = 0
-3:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
-3:6/0/physics_layer_0/angular_velocity = 0.0
-4:6/0 = 0
-4:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
-4:6/0/physics_layer_0/angular_velocity = 0.0
 5:6/0 = 0
 5:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 5:6/0/physics_layer_0/angular_velocity = 0.0
@@ -274,6 +247,8 @@ texture = ExtResource("2_1m4de")
 3:7/0 = 0
 3:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 3:7/0/physics_layer_0/angular_velocity = 0.0
+3:7/0/custom_data_0 = "tree_trunk_mid"
+3:7/0/custom_data_1 = ExtResource("3_0u1nm")
 5:7/0 = 0
 5:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 5:7/0/physics_layer_0/angular_velocity = 0.0
@@ -298,6 +273,8 @@ texture = ExtResource("2_1m4de")
 3:8/0 = 0
 3:8/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 3:8/0/physics_layer_0/angular_velocity = 0.0
+3:8/0/custom_data_0 = "tree_trunk"
+3:8/0/custom_data_1 = ExtResource("3_0u1nm")
 4:8/0 = 0
 4:8/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 4:8/0/physics_layer_0/angular_velocity = 0.0
@@ -433,6 +410,13 @@ texture = ExtResource("2_1m4de")
 3:15/0 = 0
 3:15/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 3:15/0/physics_layer_0/angular_velocity = 0.0
+2:4/size_in_atlas = Vector2i(3, 3)
+2:4/0 = 0
+2:4/0/texture_origin = Vector2i(0, 16)
+2:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:4/0/physics_layer_0/angular_velocity = 0.0
+2:4/0/custom_data_0 = "tree_leaves"
+2:4/0/custom_data_1 = ExtResource("3_0u1nm")
 
 [sub_resource type="TileSet" id="TileSet_7lqgg"]
 physics_layer_0/collision_layer = 1
@@ -444,24 +428,26 @@ sources/0 = SubResource("TileSetAtlasSource_nmaui")
 
 [node name="Terrain" type="Node2D"]
 script = ExtResource("1_yx6ne")
-world_seed = null
-world_width = null
-world_height = null
-cheese_cave_freq = null
-cheese_cave_threshold = null
-noodle_cave_freq = null
-noodle_cave_threshold = null
-height_freq = null
-height_threshold = null
+world_width = 500
+world_height = 200
+cheese_cave_freq = 0.03
+cheese_cave_threshold = -0.1
+noodle_cave_freq = 0.01
+noodle_cave_threshold = 0.05
+tree_freq = 0.5
+height_freq = 0.03
 steepness = 20.0
-minimum_height = 50.0
+minimum_height = 150.0
 top_layer = 8.0
 
 [node name="BlockMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_7lqgg")
 format = 2
 layer_0/name = "Background"
-layer_1/name = "Foreground"
+layer_1/name = "Midground"
 layer_1/z_index = 1
 layer_1/tile_data = PackedInt32Array()
+layer_2/name = "Foreground"
+layer_2/z_index = 2
+layer_2/tile_data = PackedInt32Array()
 script = ExtResource("3_tdrp7")

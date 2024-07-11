@@ -4,12 +4,16 @@ const FloatingText = preload("res://ui/floating_text.tscn")
 
 @onready var block_map: BlockMap = $BlockMap
 
-var background = 0
-var midground = 1
+const BACKGROUND = 0
+const MIDGROUND = 1
+const FOREGROUND = 2
+
+var rng = RandomNumberGenerator.new()
 
 var cheese_cave_noise: FastNoiseLite = null
 var noodle_cave_noise: FastNoiseLite = null
 var height_noise: FastNoiseLite = null
+var tree_noise: FastNoiseLite = null
 
 @export var world_seed: int
 
@@ -21,6 +25,9 @@ var height_noise: FastNoiseLite = null
 
 @export var noodle_cave_freq: float
 @export var noodle_cave_threshold: float
+
+@export var tree_freq: float
+@export var tree_threshold: float
 
 @export var height_freq: float
 @export var height_threshold: float
@@ -59,36 +66,47 @@ func _generate_terrain():
 
 	for y in range(world_height):
 		for x in range(world_width):
-			var block_prefab = _choose_block(x, y)
-			if block_prefab == null:
-				continue
-			var coords = Vector2i(x, -y) # -y -> in godot y decreases upwards
-			block_map.create_block(coords, block_prefab, midground)
-
-func _choose_block(x: int, y: int) -> BlockPrefab:
+			_create_block(x, y)
+	
+func _create_tree(coords: Vector2i, height: int):
+	block_map.create_block(coords, block_map.get_block_prefab("tree_trunk"), BACKGROUND)
+	
+	for y in range(0, height):
+		block_map.create_block(Vector2i(coords.x, coords.y - 1 - y), block_map.get_block_prefab("tree_trunk_mid"), BACKGROUND)
+	
+	block_map.create_block(Vector2i(coords.x, coords.y - 1 - height), block_map.get_block_prefab("tree_leaves"), BACKGROUND)
+	
+func _create_block(x: int, y: int):
+	var coords = Vector2i(x, -y) # in godot y decreases upwards
 	# ---Terrain shaping---
 	var height: int = height_noise.get_noise_1d(x) * steepness + minimum_height
 	
 	if y > height:
-		return null
+		return
 		
 	# Create caves
 	var cave_density = cheese_cave_noise.get_noise_2d(x, y)
 	var height_factor = 1 - (float)(y) / height
 	if cave_density * height_factor < cheese_cave_threshold:
-		return null
+		return
 		
-	if abs(noodle_cave_noise.get_noise_2d(x,y)) < noodle_cave_threshold:
-		return null
+	if abs(noodle_cave_noise.get_noise_2d(x, y)) < noodle_cave_threshold:
+		return
 	
 	# ---Decorations---
 	if y == height:
-		return block_map.get_block_prefab("grass_dirt")
+		block_map.create_block(coords, block_map.get_block_prefab("grass_dirt"), MIDGROUND)
+		
+		if tree_noise.get_noise_1d(x) < tree_threshold:
+			_create_tree(Vector2i(coords.x, coords.y - 1), rng.randi_range(1,9))
+		
+		return
 		
 	if y > height - top_layer:
-		return block_map.get_block_prefab("dirt")
+		block_map.create_block(coords, block_map.get_block_prefab("dirt"), MIDGROUND)
+		return
 		
-	return block_map.get_block_prefab("stone")
+	block_map.create_block(coords, block_map.get_block_prefab("stone"), MIDGROUND)
 
 func _generate_noise():
 	cheese_cave_noise = FastNoiseLite.new()
@@ -105,3 +123,9 @@ func _generate_noise():
 	height_noise.noise_type = FastNoiseLite.TYPE_PERLIN
 	height_noise.frequency = height_freq
 	height_noise.seed = world_seed
+	
+	
+	tree_noise = FastNoiseLite.new()
+	tree_noise.noise_type = FastNoiseLite.TYPE_PERLIN
+	tree_noise.frequency = tree_freq
+	tree_noise.seed = world_seed

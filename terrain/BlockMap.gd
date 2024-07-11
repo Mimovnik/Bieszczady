@@ -17,9 +17,12 @@ func get_block(coords: Vector2i) -> Block:
 		return null
 	return blocks[coords]
 	
-func create_block(coords: Vector2i, block_prefab: BlockPrefab, layer: int):
+func create_block(coords: Vector2i, block_prefab: BlockPrefab, layer: int, override_old: bool = false):
 	var block = block_prefab.scene.instantiate()
-	assert(!blocks.has(coords), "There already is a block at " + str(coords))
+	if override_old:
+		remove_block(coords, layer)
+	else:
+		assert(!blocks.has(coords), "There already is a block at " + str(coords))
 	
 	block.coords = coords
 	block.layer = layer

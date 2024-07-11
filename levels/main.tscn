@@ -7,15 +7,6 @@
 
 [node name="Terrain" parent="." instance=ExtResource("1_rhgbe")]
 unique_name_in_owner = true
-world_seed = 2
-world_width = 500
-world_height = 200
-cheese_cave_freq = 0.03
-cheese_cave_threshold = -0.1
-noodle_cave_freq = 0.01
-noodle_cave_threshold = 0.05
-height_freq = 0.03
-minimum_height = 150.0
 
 [node name="Player" parent="." instance=ExtResource("3_y377t")]
 scale = Vector2(2, 2)
