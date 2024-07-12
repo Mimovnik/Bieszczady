@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bpwrb8n80xy7l"]
+
+[ext_resource type="Script" path="res://terrain/Block.gd" id="1_16d1q"]
+[ext_resource type="PackedScene" uid="uid://d4in2fdhke7le" path="res://items/drops/StickDrop.tscn" id="2_wbo7c"]
+
+[node name="Block" type="Node"]
+script = ExtResource("1_16d1q")
+display_name = "bush"
+durability = 10
+drop_scene = ExtResource("2_wbo7c")

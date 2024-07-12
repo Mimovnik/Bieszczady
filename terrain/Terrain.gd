@@ -10,25 +10,30 @@ const FOREGROUND = 2
 
 var rng = RandomNumberGenerator.new()
 
-var cheese_cave_noise: FastNoiseLite = null
-var noodle_cave_noise: FastNoiseLite = null
-var height_noise: FastNoiseLite = null
-var tree_noise: FastNoiseLite = null
-
 @export var world_seed: int
 
 @export var world_width: int = 100
 @export var world_height: int = 100
 
+var cheese_cave_noise: FastNoiseLite = null
 @export var cheese_cave_freq: float
 @export var cheese_cave_threshold: float
 
+var noodle_cave_noise: FastNoiseLite = null
 @export var noodle_cave_freq: float
 @export var noodle_cave_threshold: float
 
+var tree_noise: FastNoiseLite = null
 @export var tree_freq: float
 @export var tree_threshold: float
+@export var tree_min_height: int
+@export var tree_max_height: int
 
+var bush_noise: FastNoiseLite = null
+@export var bush_freq: float
+@export var bush_threshold: float
+
+var height_noise: FastNoiseLite = null
 @export var height_freq: float
 @export var height_threshold: float
 @export var steepness: float
@@ -98,8 +103,9 @@ func _create_block(x: int, y: int):
 		block_map.create_block(coords, block_map.get_block_prefab("grass_dirt"), MIDGROUND)
 		
 		if tree_noise.get_noise_1d(x) < tree_threshold:
-			_create_tree(Vector2i(coords.x, coords.y - 1), rng.randi_range(1,9))
-		
+			_create_tree(Vector2i(coords.x, coords.y - 1), rng.randi_range(tree_min_height, tree_max_height))
+		elif bush_noise.get_noise_1d(x) < bush_threshold:
+			_create_random_bush(Vector2i(coords.x, coords.y - 1))
 		return
 		
 	if y > height - top_layer:
@@ -107,6 +113,18 @@ func _create_block(x: int, y: int):
 		return
 		
 	block_map.create_block(coords, block_map.get_block_prefab("stone"), MIDGROUND)
+
+func _create_random_bush(coords: Vector2i):
+	var rand = rng.randf_range(0, 1)
+	if rand < 0.25:
+		block_map.create_block(coords, block_map.get_block_prefab("bush_big"), BACKGROUND)
+	elif rand < 0.5:
+		block_map.create_block(coords, block_map.get_block_prefab("bush_medium"), BACKGROUND)
+	elif rand < 0.75:
+		block_map.create_block(coords, block_map.get_block_prefab("bush_small"), BACKGROUND)
+	else:
+		block_map.create_block(coords, block_map.get_block_prefab("bush_flower"), BACKGROUND)
+		
 
 func _generate_noise():
 	cheese_cave_noise = FastNoiseLite.new()
@@ -117,15 +135,19 @@ func _generate_noise():
 	noodle_cave_noise = FastNoiseLite.new()
 	noodle_cave_noise.noise_type = FastNoiseLite.TYPE_PERLIN
 	noodle_cave_noise.frequency = noodle_cave_freq
-	noodle_cave_noise.seed = world_seed
+	noodle_cave_noise.seed = world_seed + 111
 	
 	height_noise = FastNoiseLite.new()
 	height_noise.noise_type = FastNoiseLite.TYPE_PERLIN
 	height_noise.frequency = height_freq
-	height_noise.seed = world_seed
-	
+	height_noise.seed = world_seed + 222
 	
 	tree_noise = FastNoiseLite.new()
 	tree_noise.noise_type = FastNoiseLite.TYPE_PERLIN
 	tree_noise.frequency = tree_freq
-	tree_noise.seed = world_seed
+	tree_noise.seed = world_seed + 333
+
+	bush_noise = FastNoiseLite.new()
+	bush_noise.noise_type = FastNoiseLite.TYPE_PERLIN
+	bush_noise.frequency = bush_freq
+	bush_noise.seed = world_seed + 444

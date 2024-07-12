@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://itvhxdurebqp"]
+[gd_scene load_steps=10 format=3 uid="uid://itvhxdurebqp"]
 
 [ext_resource type="Script" path="res://terrain/Terrain.gd" id="1_yx6ne"]
 [ext_resource type="Texture2D" uid="uid://b14dpguifv0db" path="res://assets/brackeys_platformer_assets/sprites/world_tileset.png" id="2_1m4de"]
 [ext_resource type="PackedScene" uid="uid://dhpe8tb0gfs8y" path="res://terrain/blocks/TreeBlock.tscn" id="3_0u1nm"]
+[ext_resource type="PackedScene" uid="uid://bpwrb8n80xy7l" path="res://terrain/blocks/BushBlock.tscn" id="3_2bvi8"]
 [ext_resource type="PackedScene" uid="uid://dl81l1pbov4wc" path="res://terrain/blocks/DirtBlock.tscn" id="3_ee32l"]
 [ext_resource type="Script" path="res://terrain/BlockMap.gd" id="3_tdrp7"]
 [ext_resource type="PackedScene" uid="uid://dytc6t7nxngub" path="res://terrain/blocks/StoneBlock.tscn" id="4_vwmhd"]
@@ -165,6 +166,8 @@ texture = ExtResource("2_1m4de")
 1:3/0 = 0
 1:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:3/0/physics_layer_0/angular_velocity = 0.0
+1:3/0/custom_data_0 = "bush_big"
+1:3/0/custom_data_1 = ExtResource("3_2bvi8")
 2:3/0 = 0
 2:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:3/0/physics_layer_0/angular_velocity = 0.0
@@ -190,6 +193,8 @@ texture = ExtResource("2_1m4de")
 1:4/0 = 0
 1:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:4/0/physics_layer_0/angular_velocity = 0.0
+1:4/0/custom_data_0 = "bush_medium"
+1:4/0/custom_data_1 = ExtResource("3_2bvi8")
 5:4/0 = 0
 5:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 5:4/0/physics_layer_0/angular_velocity = 0.0
@@ -211,6 +216,8 @@ texture = ExtResource("2_1m4de")
 1:5/0 = 0
 1:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:5/0/physics_layer_0/angular_velocity = 0.0
+1:5/0/custom_data_0 = "bush_small"
+1:5/0/custom_data_1 = ExtResource("3_2bvi8")
 5:5/0 = 0
 5:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 5:5/0/physics_layer_0/angular_velocity = 0.0
@@ -226,6 +233,8 @@ texture = ExtResource("2_1m4de")
 1:6/0 = 0
 1:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:6/0/physics_layer_0/angular_velocity = 0.0
+1:6/0/custom_data_0 = "bush_flower"
+1:6/0/custom_data_1 = ExtResource("3_2bvi8")
 5:6/0 = 0
 5:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 5:6/0/physics_layer_0/angular_velocity = 0.0
@@ -436,6 +445,9 @@ cheese_cave_threshold = -0.1
 noodle_cave_freq = 0.01
 noodle_cave_threshold = 0.05
 tree_freq = 0.5
+tree_min_height = 3
+tree_max_height = 10
+bush_freq = 0.3
 height_freq = 0.03
 steepness = 20.0
 minimum_height = 150.0
